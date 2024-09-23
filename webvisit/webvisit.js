@@ -6,7 +6,7 @@ function getSourceFromScriptTag() {
   
   (async function() {
     // Fetch the sourceUrl from the data-source attribute
-    const sourceUrl = getSourceFromScriptTag() || '';
+    const registeredDomain = getSourceFromScriptTag() || '';
   
     function createVisitorSession() {
       return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -46,7 +46,7 @@ function getSourceFromScriptTag() {
     const payload = {
       session: session,
       pageUrl: pageUrl,
-      sourceUrl: sourceUrl,
+      registeredDomain: registeredDomain,
       ipAddress: ipAddress,
       ipType: ipType,
       browserInfo: browserInfo,
