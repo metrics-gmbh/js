@@ -25,5 +25,5 @@ Metrics.gmbh - what developers crave.
 
 4. Check your metrics on the CLI!
 
-** COMING SOON **
+**COMING SOON**
 
