@@ -1,7 +1,7 @@
 // Helper function to get the data-source attribute from the script tag
 function getSourceFromScriptTag() {
     const scriptTag = document.currentScript; // Get the current script tag
-    return scriptTag ? scriptTag.getAttribute('data-source') : '';
+    return scriptTag ? scriptTag.getAttribute('data-domain') : '';
   }
   
   (async function() {
