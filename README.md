@@ -17,7 +17,10 @@ Metrics.gmbh - what developers crave.
 
 ```javascript
 // Change the source to the registered site for your account.
-<script src="https://cdn.jsdelivr.net/gh/metrics-gmbh/js@latest/webvisit.js?source=https://example.com"></script>
+<script 
+    src="https://cdn.jsdelivr.net/gh/metrics-gmbh/js@latest/webvisit.js?source=https://example.com"
+    data-source="https://example.com"
+></script>
 ```
 
 4. Check your metrics on the CLI! 
