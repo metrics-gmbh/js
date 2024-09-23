@@ -23,5 +23,7 @@ Metrics.gmbh - what developers crave.
 ></script>
 ```
 
-4. Check your metrics on the CLI! 
+4. Check your metrics on the CLI!
+
+** COMING SOON **
 
