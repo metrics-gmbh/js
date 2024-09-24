@@ -15,7 +15,7 @@ function getUTMParameters() {
     }
   }
 
-  return Object.keys(utmParams).length > 0 ? utmParams : null;
+  return Object.keys(utmParams).length > 0 ? utmParams : [];
 }
 
 // Function to detect the referrer or mark traffic as direct
@@ -61,7 +61,7 @@ function getTrafficSource() {
     return navigator.userAgent;
   }
 
-  const scriptVersion = '0.1.5';
+  const scriptVersion = '0.1.6';
 
   const session = createVisitorSession();
   const ipAddress = await getIPAddress();
@@ -77,7 +77,7 @@ function getTrafficSource() {
     ipAddress: ipAddress,
     ipType: ipType,
     browserInfo: browserInfo,
-    utmParams: utmParams || 'none', // If no UTM params are found, default to 'None'
+    utmParams: utmParams,
     trafficSource: trafficSource, // Referrer or Direct Traffic
     scriptVersion: scriptVersion,
   };
