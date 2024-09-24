@@ -1,29 +1,22 @@
 # WebVisit
 
-Metrics.gmbh is the simplest metrics tool available. Created because the others make everyone sad.
-Goals:
-- No web GUI
-- CLI control for creating new metrics and checking on metrics
-- CLI account control
-- Super duper friendly for developers
+**Metrics.gmbh - metrics but for devs**
+*- It has what devs crave*
 
-Metrics.gmbh - what developers crave.
 
-1. Grab the `metrics` CLI tool, create an account using the tool, or login to an existing account.
-
-2. Register a new website using the CLI tool.
-
-3. Add the script tag go the website. Example below:
+### WebVisit
 
 ```javascript
-// Change the source to the registered site for your account.
+// Check the latest releases and put the latest in the bottom. I prefer statically pinned due to caching etc.
+// Then put this on your website in place of Google analytics, Plausible etc etc.
+// It doesn't use cookies but might one day use local storage for tracking session usage (within the site).
+// Note, no data is collected or distributed and sold to external third parties.
+// This data goes to a private API end-point for your use only.
 <script 
-    src="https://cdn.jsdelivr.net/gh/metrics-gmbh/js@latest/webvisit.js?source=https://example.com"
+    src="https://cdn.jsdelivr.net/gh/metrics-gmbh/js@0.1.5/webvisit.js?source=https://example.com"
     data-source="https://example.com"
 ></script>
 ```
 
-4. Check your metrics on the CLI!
-
-** BEING MADE **
+Right now, this service is in alpha and you cannot create an account. That said, it won't be long before I'll open up test pilots for the preview.
 

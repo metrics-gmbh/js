@@ -1,68 +1,97 @@
 // Helper function to get the data-source attribute from the script tag
 function getSourceFromScriptTag() {
-    const scriptTag = document.currentScript; // Get the current script tag
-    return scriptTag ? scriptTag.getAttribute('data-domain') : '';
+  const scriptTag = document.currentScript; // Get the current script tag
+  return scriptTag ? scriptTag.getAttribute('data-domain') : '';
+}
+
+// Function to get UTM parameters from the URL
+function getUTMParameters() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const utmParams = {};
+
+  for (const [key, value] of urlParams.entries()) {
+    if (key.startsWith('utm_')) {
+      utmParams[key] = value;
+    }
   }
-  
-  (async function() {
-    // Fetch the sourceUrl from the data-source attribute
-    const registeredDomain = getSourceFromScriptTag() || '';
-  
-    function createVisitorSession() {
-      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-        var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
-        return v.toString(16);
-      });
-    }
-  
-    const pageUrl = window.location.href;
-  
-    async function getIPAddress() {
-      try {
-        const response = await fetch('https://api64.ipify.org?format=json');
-        const data = await response.json();
-        return data.ip;
-      } catch (error) {
-        console.error('Error fetching IP address:', error);
-        return null;
-      }
-    }
-  
-    function detectIPType(ipAddress) {
-      return ipAddress.includes(':') ? 'IPv6' : 'IPv4';
-    }
-  
-    function getBrowserInfo() {
-      return navigator.userAgent;
-    }
-  
-    const scriptVersion = "0.1.0";
-  
-    const session = createVisitorSession();
-    const ipAddress = await getIPAddress();
-    const ipType = ipAddress ? detectIPType(ipAddress) : null;
-    const browserInfo = getBrowserInfo();
-  
-    const payload = {
-      session: session,
-      pageUrl: pageUrl,
-      registeredDomain: registeredDomain,
-      ipAddress: ipAddress,
-      ipType: ipType,
-      browserInfo: browserInfo,
-      scriptVersion: scriptVersion
-    };
-  
+
+  return Object.keys(utmParams).length > 0 ? utmParams : null;
+}
+
+// Function to detect the referrer or mark traffic as direct
+function getTrafficSource() {
+  const referrer = document.referrer;
+  if (referrer) {
+    return referrer;
+  } else {
+    return 'direct';
+  }
+}
+
+(async function () {
+  // Fetch the sourceUrl from the data-source attribute
+  const registeredDomain = getSourceFromScriptTag() || '';
+
+  function createVisitorSession() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+      var r = (Math.random() * 16) | 0,
+        v = c === 'x' ? r : (r & 0x3) | 0x8;
+      return v.toString(16);
+    });
+  }
+
+  const pageUrl = window.location.href;
+
+  async function getIPAddress() {
     try {
-      await fetch('https://sink.metrics.gmbh/webvisit', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(payload)
-      });
-      console.log('Data sent successfully:', payload);
+      const response = await fetch('https://api64.ipify.org?format=json');
+      const data = await response.json();
+      return data.ip;
     } catch (error) {
-      console.error('Error sending data:', error);
+      console.error('Error fetching IP address:', error);
+      return null;
     }
-  })();
+  }
+
+  function detectIPType(ipAddress) {
+    return ipAddress.includes(':') ? 'IPv6' : 'IPv4';
+  }
+
+  function getBrowserInfo() {
+    return navigator.userAgent;
+  }
+
+  const scriptVersion = '0.1.5';
+
+  const session = createVisitorSession();
+  const ipAddress = await getIPAddress();
+  const ipType = ipAddress ? detectIPType(ipAddress) : null;
+  const browserInfo = getBrowserInfo();
+  const utmParams = getUTMParameters(); // UTM query parameters
+  const trafficSource = getTrafficSource(); // Referrer or Direct Traffic
+
+  const payload = {
+    session: session,
+    pageUrl: pageUrl,
+    registeredDomain: registeredDomain,
+    ipAddress: ipAddress,
+    ipType: ipType,
+    browserInfo: browserInfo,
+    utmParams: utmParams || 'none', // If no UTM params are found, default to 'None'
+    trafficSource: trafficSource, // Referrer or Direct Traffic
+    scriptVersion: scriptVersion,
+  };
+
+  try {
+    await fetch('https://sink.metrics.gmbh/webvisit', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    });
+    console.log('Data sent successfully:', payload);
+  } catch (error) {
+    console.error('Error sending data:', error);
+  }
+})();
