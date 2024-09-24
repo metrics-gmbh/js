@@ -12,9 +12,10 @@
 // It doesn't use cookies but might one day use local storage for tracking session usage (within the site).
 // Note, no data is collected or distributed and sold to external third parties.
 // This data goes to a private API end-point for your use only.
-<script 
-    src="https://cdn.jsdelivr.net/gh/metrics-gmbh/js@0.1.5/webvisit.js?source=https://example.com"
-    data-source="https://example.com"
+<script
+    defer
+    src="https://cdn.jsdelivr.net/gh/metrics-gmbh/js@0.1.6/webvisit/webvisit.js"
+    data-domain="https://example.com"
 ></script>
 ```
 
