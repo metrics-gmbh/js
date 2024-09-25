@@ -42,30 +42,13 @@ function getTrafficSource() {
 
   const pageUrl = window.location.href;
 
-  async function getIPAddress() {
-    try {
-      const response = await fetch('https://api64.ipify.org?format=json');
-      const data = await response.json();
-      return data.ip;
-    } catch (error) {
-      console.error('Error fetching IP address:', error);
-      return null;
-    }
-  }
-
-  function detectIPType(ipAddress) {
-    return ipAddress.includes(':') ? 'IPv6' : 'IPv4';
-  }
-
   function getBrowserInfo() {
     return navigator.userAgent;
   }
 
-  const scriptVersion = '0.1.6';
+  const scriptVersion = '0.1.7';
 
   const session = createVisitorSession();
-  const ipAddress = await getIPAddress();
-  const ipType = ipAddress ? detectIPType(ipAddress) : null;
   const browserInfo = getBrowserInfo();
   const utmParams = getUTMParameters(); // UTM query parameters
   const trafficSource = getTrafficSource(); // Referrer or Direct Traffic
@@ -74,8 +57,6 @@ function getTrafficSource() {
     session: session,
     pageUrl: pageUrl,
     registeredDomain: registeredDomain,
-    ipAddress: ipAddress,
-    ipType: ipType,
     browserInfo: browserInfo,
     utmParams: utmParams,
     trafficSource: trafficSource, // Referrer or Direct Traffic
