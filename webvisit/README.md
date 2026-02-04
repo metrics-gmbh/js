@@ -15,7 +15,7 @@
 
 <script
     defer
-    src="https://cdn.jsdelivr.net/gh/metrics-gmbh/js@0.1.7/webvisit/webvisit.js"
+    src="https://cdn.jsdelivr.net/gh/metrics-gmbh/js@0.1.8/webvisit/webvisit.js"
     data-domain="https://example.com"
 ></script>
 ```
