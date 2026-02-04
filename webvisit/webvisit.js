@@ -4,18 +4,18 @@ function getSourceFromScriptTag() {
   return scriptTag ? scriptTag.getAttribute('data-domain') : '';
 }
 
-// Function to get UTM parameters from the URL
+// Function to get UTM parameters from the URL as an array of "key=value" strings
 function getUTMParameters() {
   const urlParams = new URLSearchParams(window.location.search);
-  const utmParams = {};
+  const utmParams = [];
 
   for (const [key, value] of urlParams.entries()) {
     if (key.startsWith('utm_')) {
-      utmParams[key] = value;
+      utmParams.push(`${key}=${value}`);
     }
   }
 
-  return Object.keys(utmParams).length > 0 ? utmParams : [];
+  return utmParams;
 }
 
 // Function to detect the referrer or mark traffic as direct
@@ -46,7 +46,7 @@ function getTrafficSource() {
     return navigator.userAgent;
   }
 
-  const scriptVersion = '0.1.7';
+  const scriptVersion = '0.1.8';
 
   const session = createVisitorSession();
   const browserInfo = getBrowserInfo();
